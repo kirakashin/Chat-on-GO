@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat</title>
+</head>
+<body>
+
+<a href="/" style="margin-right: 20px;">CHAT!</a>
+<a href="/send" style="margin-right: 20px;">Send a message!</a>
+<a href="/login" style="margin-right: 20px;">Login!</a>
+<a href="/logout" style="margin-right: 20px;">Logout!</a>
+<a href="/count" style="margin-right: 20px;">Count!</a>
+
+{{if (and .Login .Send)}}
+	<h1>Message sent!</h1>
+{{else if or .Login .Send}}
+	<h1>Login first!</h1>
+{{else}}
+	<h1>What do you want to send:</h1>
+	<form method="POST">
+		<label>Message:</label><br />
+		<input type="text" name="message"><br />
+        <input type="submit">
+	</form>
+{{end}}
+
+</body>
+</html>
