@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Choose your name!</title>
+</head>
+<body>
+
+<a href="/" style="margin-right: 20px;">CHAT!</a>
+
+
+
+{{if .Success}}
+	<a href="/send" style="margin-right: 20px;">Send a message!</a>
+	<a href="/login" style="margin-right: 20px;">Rename!</a>
+	<a href="/logout" style="margin-right: 20px;">Logout!</a>
+	<a href="/count" style="margin-right: 20px;">Count!</a>
+
+	<h1>Login complete!</h1>
+{{else}}
+	<a href="/count" style="margin-right: 20px;">Count!</a>
+	<h1>Choose your name:</h1>
+	<form method="POST">
+		<label>Name:</label><br />
+		<input type="text" name="Name"><br />
+        <input type="submit">
+	</form>
+{{end}}
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Choose your name!</title>
+</head>
+<body>
+
+<a href="/" style="margin-right: 20px;">CHAT!</a>
+<a href="/login" style="margin-right: 20px;">Login!</a>
+<a href="/count" style="margin-right: 20px;">Count!</a>
+
+
+
+{{if .Login}}
+	<h1>Logout complete!</h1>
+{{else}}
+	<h1>Login first!</h1>
+{{end}}
+
+</body>
+</html>
