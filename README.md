@@ -4,10 +4,10 @@
 
 ## Instalation and run
 
-'''bash
+```bash
 git clone https://github.com/kirakashin/Chat-on-GO
 go run ChatGo/chat.go
-'''
+```
 
 ## Usage
 До Login:
