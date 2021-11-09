@@ -114,11 +114,19 @@ type Flag struct {
 
 func chatHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<a href=\"/\" style=\"margin-right: 20px;\">CHAT!</a>")
-	fmt.Fprintf(w, "<a href=\"/send\" style=\"margin-right: 20px;\">Send a message!</a>")
-	fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Login!</a>")
-	fmt.Fprintf(w, "<a href=\"/logout\" style=\"margin-right: 20px;\">Logout!</a>")
+	if login(r) {
+		fmt.Fprintf(w, "<a href=\"/send\" style=\"margin-right: 20px;\">Send a message!</a>")
+		if nameIndex(r) == -1 {
+			fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Relogin!</a>")
+		} else {
+			fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Rename!</a>")
+		}
+		fmt.Fprintf(w, "<a href=\"/logout\" style=\"margin-right: 20px;\">Logout!</a>")
+	} else {
+		fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Login!</a>")
+	}
 	fmt.Fprintf(w, "<a href=\"/count\" style=\"margin-right: 20px;\">Count!</a>")
-	fmt.Fprintf(w, "<ul>")
+	fmt.Fprintf(w, "<br>")
 	for _, v := range DATA {
 		fmt.Fprintf(w, "%[1]v\t[%[2]v]\t%[3]v\n", v.Time, v.Name, v.Body)
 		fmt.Fprintf(w, "<br>")
@@ -141,11 +149,18 @@ func sendHandler(w http.ResponseWriter, r *http.Request) {
 
 func countHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<a href=\"/\" style=\"margin-right: 20px;\">CHAT!</a>")
-	fmt.Fprintf(w, "<a href=\"/send\" style=\"margin-right: 20px;\">Send a message!</a>")
-	fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Login!</a>")
-	fmt.Fprintf(w, "<a href=\"/logout\" style=\"margin-right: 20px;\">Logout!</a>")
+	if login(r) {
+		fmt.Fprintf(w, "<a href=\"/send\" style=\"margin-right: 20px;\">Send a message!</a>")
+		if nameIndex(r) == -1 {
+			fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Relogin!</a>")
+		} else {
+			fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Rename!</a>")
+		}
+		fmt.Fprintf(w, "<a href=\"/logout\" style=\"margin-right: 20px;\">Logout!</a>")
+	} else {
+		fmt.Fprintf(w, "<a href=\"/login\" style=\"margin-right: 20px;\">Login!</a>")
+	}
 	fmt.Fprintf(w, "<a href=\"/count\" style=\"margin-right: 20px;\">Count!</a>")
-	fmt.Fprintf(w, "<br>")
 	fmt.Fprintf(w, "<br>")
 	fmt.Fprintf(w, "Number of logins: %v\n", len(USER))
 	fmt.Fprintf(w, "<br>")
@@ -153,13 +168,14 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 func main() {
-	fmt.Println("WIP")
+	fmt.Println("Server up!")
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/count", countHandler)
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/", chatHandler)
 	http.HandleFunc("/send", sendHandler)
-	err := http.ListenAndServe(":2000", nil)
+	PORT := ":2000"
+	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
 		fmt.Println(err)
 		return
