@@ -6,7 +6,8 @@
 
 ```bash
 git clone https://github.com/kirakashin/Chat-on-GO
-go run ChatGo/chat.go
+cd ChatGO
+go run chat.go
 ```
 
 ## Usage
