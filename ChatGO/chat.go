@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -182,6 +185,11 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Online: %v\n", USER)
 
 }
+
+type Port struct {
+	Port string
+}
+
 func main() {
 	fmt.Println("Server up!")
 	http.HandleFunc("/login", loginHandler)
@@ -189,8 +197,19 @@ func main() {
 	http.HandleFunc("/logout", logoutHandler)
 	http.HandleFunc("/", chatHandler)
 	http.HandleFunc("/send", sendHandler)
-	PORT := ":2000"
-	err := http.ListenAndServe(PORT, nil)
+	jsonFile, err := os.Open("config.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer jsonFile.Close()
+	var port Port
+	byte, _ := ioutil.ReadAll(jsonFile)
+	err = json.Unmarshal(byte, &port)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Running on" + port.Port)
+	err = http.ListenAndServe(port.Port, nil)
 	if err != nil {
 		fmt.Println(err)
 		return
